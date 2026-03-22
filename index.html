@@ -1,0 +1,950 @@
+html file <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>TECHNOVANZA 2026 — Registration</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#04050a;--s1:#080c14;--s2:#0d1220;--card:#0f1422;
+  --border:#1c2540;--border2:#253060;
+  --cyan:#00e5ff;--cyan2:#00b8d9;--orange:#ff6b1a;--orange2:#ff9a4d;
+  --green:#00ff9d;--red:#ff3d5a;--yellow:#ffd060;
+  --text:#e4ecff;--muted:#4a5880;--muted2:#7080a8;
+  --fd:'Bebas Neue',sans-serif;--fb:'Outfit',sans-serif;
+  --r:14px;--rs:8px;
+}
+*,::before,::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--fb);min-height:100vh;overflow-x:hidden}
+.bg-wrap{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg-circuit{position:absolute;inset:0;background-image:linear-gradient(rgba(0,229,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.04) 1px,transparent 1px);background-size:60px 60px}
+.bg-circuit::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,229,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.02) 1px,transparent 1px);background-size:12px 12px}
+.bg-glow1{position:absolute;width:800px;height:600px;top:-200px;left:-100px;background:radial-gradient(ellipse,rgba(0,229,255,.08) 0%,transparent 70%);animation:drift 20s ease-in-out infinite alternate}
+.bg-glow2{position:absolute;width:600px;height:500px;bottom:-100px;right:-100px;background:radial-gradient(ellipse,rgba(255,107,26,.07) 0%,transparent 70%);animation:drift 15s ease-in-out infinite alternate-reverse}
+.bg-scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.15) 2px,rgba(0,0,0,.15) 4px)}
+@keyframes drift{from{transform:translate(0,0)}to{transform:translate(40px,60px)}}
+.hero{position:relative;z-index:10;padding:52px 20px 0;text-align:center}
+.college-strip{display:inline-flex;align-items:center;gap:10px;background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.18);border-radius:100px;padding:7px 18px;margin-bottom:24px;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--cyan);font-weight:600}
+.college-strip::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.hero-title{font-family:var(--fd);font-size:clamp(4rem,12vw,9rem);line-height:.9;letter-spacing:4px;color:#fff;display:inline-block}
+.hero-title .tc{color:transparent;-webkit-text-stroke:2px var(--cyan);text-shadow:0 0 40px rgba(0,229,255,.3)}
+.hero-year{font-family:var(--fd);font-size:clamp(2rem,5vw,4rem);letter-spacing:8px;color:var(--orange);text-shadow:0 0 30px rgba(255,107,26,.4);display:block;margin-top:-8px}
+.hero-sub{font-size:13px;color:var(--muted2);letter-spacing:2px;text-transform:uppercase;margin:18px 0 28px}
+.rules{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:48px}
+.rule{display:flex;align-items:center;gap:6px;padding:5px 13px;background:var(--s2);border:1px solid var(--border2);border-radius:6px;font-size:11px;font-weight:600;color:var(--muted2)}
+.rule i{width:5px;height:5px;border-radius:50%;background:var(--cyan);flex-shrink:0}
+.stepper-wrap{max-width:620px;margin:0 auto;padding:0 20px;position:relative;z-index:10}
+.stepper{display:flex;align-items:center;margin-bottom:8px}
+.snode{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:15px;border:2px solid var(--border2);color:var(--muted);background:var(--s1);flex-shrink:0;transition:all .35s}
+.snode.active{border-color:var(--cyan);color:var(--bg);background:var(--cyan);box-shadow:0 0 18px rgba(0,229,255,.5)}
+.snode.done{border-color:var(--green);color:var(--green);background:rgba(0,255,157,.07)}
+.strack{flex:1;height:2px;background:var(--border);position:relative;overflow:hidden}
+.strack-fill{position:absolute;top:0;bottom:0;left:0;width:0;background:linear-gradient(90deg,var(--green),var(--cyan));transition:width .45s}
+.strack.done .strack-fill{width:100%}
+.slabels{display:flex;justify-content:space-between;margin-bottom:28px}
+.slbl{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:600;width:34px;text-align:center}
+.slbl.active{color:var(--cyan)}.slbl.done{color:var(--green)}
+.form-wrap{max-width:620px;margin:0 auto;padding:0 20px 100px;position:relative;z-index:10}
+.panel{display:none}.panel.active{display:block;animation:slideUp .38s ease both}
+@keyframes slideUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:28px;margin-bottom:14px;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),var(--orange))}
+.card-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:22px}
+.card-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.15)}
+.ct{font-family:var(--fd);font-size:21px;letter-spacing:1px;color:#fff;line-height:1}
+.cs{font-size:12px;color:var(--muted2);margin-top:4px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted2);margin-bottom:7px}
+.field input,.field select{width:100%;padding:12px 15px;background:var(--s1);border:1px solid var(--border2);border-radius:var(--rs);color:var(--text);font-family:var(--fb);font-size:15px;outline:none;transition:border-color .2s,box-shadow .2s;appearance:none}
+.field input:focus,.field select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.1)}
+.field input.err{border-color:var(--red);box-shadow:0 0 0 3px rgba(255,61,90,.1)}
+.field input.ok{border-color:var(--green);}
+.field input::placeholder{color:var(--muted)}
+.field select option{background:var(--s1)}
+.hint{font-size:11px;color:var(--muted2);margin-top:5px;min-height:16px;transition:color .2s}
+.hint.ok{color:var(--green)}
+.hint.err{color:var(--red)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+@media(max-width:460px){.g2{grid-template-columns:1fr}}
+.counter{display:inline-flex;align-items:center;gap:6px;padding:5px 13px;border-radius:100px;font-size:12px;font-weight:700;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);color:var(--cyan);margin-bottom:12px}
+.counter.maxed{background:rgba(255,208,96,.08);border-color:rgba(255,208,96,.3);color:var(--yellow)}
+.ev-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
+@media(max-width:460px){.ev-grid{grid-template-columns:1fr}}
+.ev{border:2px solid var(--border);border-radius:var(--rs);padding:13px 15px;cursor:pointer;background:var(--s1);position:relative;overflow:hidden;user-select:none;transition:border-color .2s,background .2s,box-shadow .2s,transform .15s}
+.ev:hover:not(.ev-off):not(.ev-full){border-color:var(--border2);transform:translateY(-2px)}
+.ev.t1{border-color:var(--cyan);background:rgba(0,229,255,.06);box-shadow:0 0 18px rgba(0,229,255,.15)}
+.ev.t2{border-color:var(--orange);background:rgba(255,107,26,.06);box-shadow:0 0 18px rgba(255,107,26,.12)}
+.ev.nt{border-color:var(--orange);background:rgba(255,107,26,.06);box-shadow:0 0 18px rgba(255,107,26,.12)}
+.ev.ev-off{opacity:.3;pointer-events:none}
+.ev.ev-full{opacity:.45;pointer-events:none;border-color:var(--red)!important}
+.ev.ev-full::after{content:'FULL';position:absolute;top:7px;right:7px;background:var(--red);color:#fff;font-size:9px;font-weight:800;letter-spacing:1.5px;padding:2px 7px;border-radius:4px}
+.ev-chk{position:absolute;top:9px;right:9px;width:17px;height:17px;border-radius:50%;display:none;align-items:center;justify-content:center;font-size:9px;font-weight:700}
+.t1 .ev-chk{display:flex;background:var(--cyan);color:var(--bg)}
+.t2 .ev-chk{display:flex;background:var(--orange);color:#fff}
+.nt .ev-chk{display:flex;background:var(--orange);color:#fff}
+.ev-name{font-family:var(--fd);font-size:16px;letter-spacing:.5px;color:#fff;margin-bottom:5px}
+.ev-badges{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px}
+.badge{font-size:10px;padding:2px 7px;border-radius:4px;font-weight:600;letter-spacing:.3px}
+.bt{background:rgba(0,229,255,.1);color:var(--cyan);border:1px solid rgba(0,229,255,.2)}
+.bn{background:rgba(255,107,26,.1);color:var(--orange2);border:1px solid rgba(255,107,26,.2)}
+.bm{background:rgba(255,208,96,.08);color:var(--yellow);border:1px solid rgba(255,208,96,.2)}
+.cap{margin-top:4px}
+.cap-lbl{font-size:10px;color:var(--muted2);margin-bottom:3px}
+.cap-bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.cap-fill{height:100%;border-radius:2px;background:var(--green);transition:width .4s}
+.cap-fill.w{background:var(--yellow)}.cap-fill.d{background:var(--red)}
+.tbox{margin-top:14px;padding:18px;background:rgba(0,229,255,.04);border:1px solid rgba(0,229,255,.15);border-radius:var(--rs);display:none}
+.tbox.show{display:block;animation:slideUp .3s ease both}
+.tbox-title{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--cyan);margin-bottom:12px}
+.alert{padding:11px 15px;border-radius:var(--rs);font-size:13px;font-weight:500;display:flex;gap:9px;align-items:flex-start;margin-bottom:14px;line-height:1.5}
+.ai{background:rgba(0,229,255,.07);border:1px solid rgba(0,229,255,.2);color:var(--cyan)}
+.aw{background:rgba(255,208,96,.07);border:1px solid rgba(255,208,96,.2);color:var(--yellow)}
+.ae{background:rgba(255,61,90,.07);border:1px solid rgba(255,61,90,.2);color:var(--red);font-weight:600}
+.aok{background:rgba(0,255,157,.07);border:1px solid rgba(0,255,157,.2);color:var(--green)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;border-radius:var(--rs);border:none;cursor:pointer;font-family:var(--fb);font-size:15px;font-weight:600;transition:all .2s;width:100%}
+.bp{background:linear-gradient(135deg,var(--cyan),var(--cyan2));color:var(--bg);font-weight:700;box-shadow:0 4px 18px rgba(0,229,255,.3)}
+.bp:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,229,255,.4)}
+.bp:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.bs{background:transparent;border:1px solid var(--border2);color:var(--muted2)}
+.bs:hover{border-color:var(--cyan);color:var(--text)}
+.bg-btn{background:transparent;border:none;color:var(--muted2);font-size:14px;padding:11px 0;cursor:pointer;text-decoration:underline;text-decoration-color:transparent;transition:color .2s,text-decoration-color .2s;font-family:var(--fb)}
+.bg-btn:hover{color:var(--cyan);text-decoration-color:var(--cyan)}
+.brow{display:flex;gap:11px}
+.brow .bs{width:auto;padding:13px 20px;flex-shrink:0}
+.spin{width:15px;height:15px;border:2px solid rgba(0,0,0,.3);border-top-color:var(--bg);border-radius:50%;animation:rot .6s linear infinite;display:none}
+@keyframes rot{to{transform:rotate(360deg)}}
+.loading .spin{display:block}.loading .lbl{display:none}
+.success{text-align:center;padding:36px 16px}
+.s-icon{width:76px;height:76px;border-radius:50%;margin:0 auto 22px;background:rgba(0,255,157,.1);border:2px solid var(--green);display:flex;align-items:center;justify-content:center;font-size:34px;animation:pop .5s .1s ease both;box-shadow:0 0 36px rgba(0,255,157,.2)}
+@keyframes pop{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}
+.s-title{font-family:var(--fd);font-size:30px;letter-spacing:2px;color:#fff;margin-bottom:5px}
+.s-sub{font-size:14px;color:var(--muted2);margin-bottom:20px}
+.dpass{background:var(--s1);border:1px solid var(--border2);border-radius:var(--r);overflow:hidden;margin-top:6px;text-align:left}
+.dp-hdr{background:linear-gradient(135deg,rgba(0,229,255,.12),rgba(255,107,26,.08));border-bottom:1px solid var(--border2);padding:18px 22px;display:flex;align-items:center;justify-content:space-between}
+.dp-brand{font-family:var(--fd);font-size:19px;letter-spacing:2px;color:#fff}
+.dp-brand span{color:var(--cyan)}
+.dp-college{font-size:10px;color:var(--muted2);margin-top:2px}
+.dp-id{font-family:var(--fd);font-size:12px;letter-spacing:2px;color:var(--orange)}
+.dp-body{padding:22px}
+.dp-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.dp-row:last-child{border:none}
+.dk{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);font-weight:600}
+.dv{font-size:13px;color:var(--text);font-weight:500;text-align:right;max-width:58%}
+.dp-ev{margin-top:16px;padding-top:14px;border-top:1px solid var(--border)}
+.dp-ev-title{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-weight:600;margin-bottom:8px}
+.dp-chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{padding:5px 12px;border-radius:5px;font-size:11px;font-weight:600}
+.cht{background:rgba(0,229,255,.12);color:var(--cyan);border:1px solid rgba(0,229,255,.25)}
+.chn{background:rgba(255,107,26,.1);color:var(--orange2);border:1px solid rgba(255,107,26,.2)}
+.chp{background:rgba(255,208,96,.08);color:var(--yellow);border:1px solid rgba(255,208,96,.2)}
+.dp-team{margin-top:14px;padding:12px;background:rgba(0,229,255,.04);border:1px solid rgba(0,229,255,.1);border-radius:var(--rs)}
+.dp-team-title{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--cyan);font-weight:600;margin-bottom:8px}
+.wa-banner{display:flex;align-items:center;gap:12px;padding:14px 16px;background:rgba(37,211,102,.08);border:1px solid rgba(37,211,102,.25);border-radius:10px;text-decoration:none}
+.wa-icon{width:42px;height:42px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.wa-t{color:#25d366;font-weight:700;font-size:13px}.wa-s{color:var(--muted2);font-size:11px;margin-top:2px}
+footer{text-align:center;padding:26px 20px;color:var(--muted);font-size:12px;position:relative;z-index:10;border-top:1px solid var(--border);margin-top:20px}
+footer span{color:var(--cyan)}
+</style>
+</head>
+<body>
+<div class="bg-wrap"><div class="bg-circuit"></div><div class="bg-glow1"></div><div class="bg-glow2"></div><div class="bg-scan"></div></div>
+
+<div class="hero">
+  <div class="college-strip">Anjalai Ammal Mahalingam Engineering College</div>
+  <div><h1 class="hero-title">TECHNO<span class="tc">VANZA</span></h1><span class="hero-year">2 0 2 6</span></div>
+  <p class="hero-sub">Annual Technical &amp; Cultural Symposium &middot; Event Registration</p>
+  <div class="rules">
+    <div class="rule"><i></i>Min. 1 Event (Tech or Non-Tech)</div>
+    <div class="rule"><i></i>Max. 2 Events Total</div>
+    <div class="rule"><i></i>Teams Max 2 Members</div>
+    <div class="rule"><i></i>Solo: 30 Seats &middot; Team: 15 Pairs</div>
+  </div>
+</div>
+
+<div class="stepper-wrap">
+  <div class="stepper">
+    <div class="snode active" id="sn1">1</div>
+    <div class="strack" id="st1"><div class="strack-fill"></div></div>
+    <div class="snode" id="sn2">2</div>
+    <div class="strack" id="st2"><div class="strack-fill"></div></div>
+    <div class="snode" id="sn3">3</div>
+    <div class="strack" id="st3"><div class="strack-fill"></div></div>
+    <div class="snode" id="sn4">&#10003;</div>
+  </div>
+  <div class="slabels">
+    <div class="slbl active" id="sl1">Details</div>
+    <div class="slbl" id="sl2" style="flex:1;text-align:center">Technical</div>
+    <div class="slbl" id="sl3" style="flex:1;text-align:center">Non-Tech</div>
+    <div class="slbl" id="sl4">Done</div>
+  </div>
+</div>
+
+<div class="form-wrap">
+
+<!-- STEP 1 -->
+<div class="panel active" id="p1">
+<div class="card">
+  <div class="card-head"><div class="card-icon">&#128100;</div><div><div class="ct">PARTICIPANT DETAILS</div><div class="cs">Fill in exactly as per college records</div></div></div>
+  <div id="a1"></div>
+  <div class="g2">
+    <div class="field">
+      <label>Register Number *</label>
+      <input type="text" id="f-reg" placeholder="12-digit number" maxlength="12" inputmode="numeric" autocomplete="off"/>
+      <div class="hint" id="reg-hint">Exactly 12 digits &mdash; numbers only</div>
+    </div>
+    <div class="field"><label>Full Name *</label><input type="text" id="f-name" placeholder="As per college ID"/></div>
+  </div>
+  <div class="g2">
+    <div class="field">
+      <label>Department *</label>
+      <select id="f-dept"><option value="">Select</option><option>CSE</option><option>IT</option><option>ECE</option><option>EEE</option><option>MECH</option><option>CIVIL</option><option>AIDS</option><option>MCA</option><option>CHEM</option></select>
+    </div>
+    <div class="field">
+      <label>Year *</label>
+      <select id="f-year"><option value="">Select</option><option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option>4th Year</option></select>
+    </div>
+  </div>
+  <div class="g2">
+    <div class="field">
+      <label>Phone Number *</label>
+      <input type="tel" id="f-phone" placeholder="10-digit mobile" maxlength="10" inputmode="numeric" autocomplete="off"/>
+      <div class="hint" id="phone-hint">Must be 10 digits, cannot start with 0</div>
+    </div>
+    <div class="field"><label>Email Address *</label><input type="email" id="f-email" placeholder="For your digital pass"/></div>
+  </div>
+  <div class="alert ai" style="margin-top:6px">&#8505;&#65039; Digital pass will be emailed after registration.</div>
+  <button class="btn bp" id="btn1" onclick="doStep1()"><span class="lbl">Continue &mdash; Choose Events &rarr;</span><div class="spin"></div></button>
+</div>
+</div>
+
+<!-- STEP 2 -->
+<div class="panel" id="p2">
+<div class="card">
+  <div class="card-head"><div class="card-icon">&#9881;&#65039;</div><div><div class="ct">TECHNICAL EVENTS</div><div class="cs" id="tech-cs">Select 1 or 2 &mdash; mandatory</div></div></div>
+  <div id="pre-notice"></div>
+  <div id="tech-full-notice"></div>
+  <div class="counter" id="tctr" style="display:none">0 / 2 selected</div>
+  <div id="tech-info" class="alert ai" style="margin-bottom:12px">You may pick up to <strong>2 Technical events</strong>. Picking 2 means no Non-Technical event.</div>
+  <div class="ev-grid" id="tech-grid"></div>
+  <div class="tbox" id="ibox">
+    <div class="tbox-title">&#128101; IDEATHON TEAM DETAILS</div>
+    <div class="alert aw">&#9888;&#65039; Register as team leader. Partner must NOT submit separately.</div>
+    <div class="field"><label>Partner Full Name *</label><input type="text" id="i-name" placeholder="Partner full name"/></div>
+    <div class="g2">
+      <div class="field">
+        <label>Partner Reg No. *</label>
+        <input type="text" id="i-reg" placeholder="12-digit number" maxlength="12" inputmode="numeric"/>
+        <div class="hint" id="ireg-hint">Exactly 12 digits</div>
+      </div>
+      <div class="field"><label>Partner Email *</label><input type="email" id="i-email" placeholder="They will get a notification"/></div>
+    </div>
+  </div>
+  <div style="margin-top:18px" class="brow">
+    <button class="btn bs" id="back1" onclick="goTo(1)">&#8592; Back</button>
+    <button class="btn bp" id="btn2" onclick="doStep2()"><span class="lbl">Continue &rarr;</span><div class="spin"></div></button>
+  </div>
+</div>
+</div>
+
+<!-- STEP 3 -->
+<div class="panel" id="p3">
+<div class="card">
+  <div class="card-head"><div class="card-icon">&#127917;</div><div><div class="ct">NON-TECHNICAL EVENT</div><div class="cs">Optional &mdash; add one or skip</div></div></div>
+  <div id="nt-notice"></div>
+  <div class="ev-grid" id="nt-grid"></div>
+  <div class="tbox" id="rbox">
+    <div class="tbox-title">&#128101; RAPID RUSH TEAM DETAILS</div>
+    <div class="alert aw">&#9888;&#65039; Register as team leader. Partner must NOT submit separately.</div>
+    <div class="field"><label>Partner Full Name *</label><input type="text" id="r-name" placeholder="Partner full name"/></div>
+    <div class="g2">
+      <div class="field">
+        <label>Partner Reg No. *</label>
+        <input type="text" id="r-reg" placeholder="12-digit number" maxlength="12" inputmode="numeric"/>
+        <div class="hint" id="rreg-hint">Exactly 12 digits</div>
+      </div>
+      <div class="field"><label>Partner Email *</label><input type="email" id="r-email" placeholder="They will get a notification"/></div>
+    </div>
+  </div>
+  <div style="margin-top:18px" class="brow">
+    <button class="btn bs" id="back2" onclick="goTo(2)">&#8592; Back</button>
+    <button class="btn bp" id="sbtn" onclick="doStep3()"><span class="lbl">Submit Registration &#10003;</span><div class="spin"></div></button>
+  </div>
+  <button class="bg-btn" id="skipbtn" onclick="doSkip()" style="margin-top:8px;width:100%;text-align:center">Skip &mdash; register with Technical event only &rarr;</button>
+</div>
+</div>
+
+<!-- STEP 4 SUCCESS -->
+<div class="panel" id="p4">
+<div class="card">
+  <div class="success">
+    <div class="s-icon">&#10003;</div>
+    <div class="s-title">REGISTERED!</div>
+    <div class="s-sub">Your digital pass has been sent to your email.</div>
+    <div id="confirms"></div>
+    <div class="dpass">
+      <div class="dp-hdr">
+        <div><div class="dp-brand"><span>TECHNO</span>VANZA 2026</div><div class="dp-college">Anjalai Ammal Mahalingam Engineering College</div></div>
+        <div class="dp-id" id="dp-id">&mdash;</div>
+      </div>
+      <div class="dp-body">
+        <div class="dp-row"><span class="dk">Name</span><span class="dv" id="dp-name">&mdash;</span></div>
+        <div class="dp-row"><span class="dk">Reg. No.</span><span class="dv" id="dp-reg">&mdash;</span></div>
+        <div class="dp-row"><span class="dk">Dept &amp; Year</span><span class="dv" id="dp-dept">&mdash;</span></div>
+        <div class="dp-row"><span class="dk">Phone</span><span class="dv" id="dp-phone">&mdash;</span></div>
+        <div class="dp-ev"><div class="dp-ev-title">Enrolled Events</div><div class="dp-chips" id="dp-evs"></div></div>
+        <div id="dp-team"></div>
+        <a href="https://chat.whatsapp.com/HhRTOv148ZU9KobhO0J7El" target="_blank" class="wa-banner" style="margin-top:14px">
+          <div class="wa-icon">&#128172;</div>
+          <div><div class="wa-t">Join TECHNOVANZA 2026 WhatsApp Community</div><div class="wa-s">Get schedule, updates &amp; announcements</div></div>
+        </a>
+      </div>
+    </div>
+    <button class="btn bs" id="resetbtn" onclick="doReset()" style="margin-top:20px;max-width:280px;margin-left:auto;margin-right:auto">&#65291; Register Another Participant</button>
+  </div>
+</div>
+</div>
+
+</div>
+<footer>TECHNOVANZA 2026 &nbsp;&middot;&nbsp; Anjalai Ammal Mahalingam Engineering College &nbsp;&middot;&nbsp; <span>technovanzacse26@gmail.com</span></footer>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────────────────────────
+var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_od8guA8StX6OmZNsEWIyztUf1a_yqY00C1reCR2Zygit9m1fGVjhyQN1wEm940sx/exec";
+var WA_LINK    = "https://chat.whatsapp.com/HhRTOv148ZU9KobhO0J7El";
+
+var SOLO_LIMIT = 2;
+var TEAM_LIMIT = 2;
+var LIVE_LIMITS = {};
+var ALL_TECH_FULL = false;
+
+var TECH = [
+  {id:"prompt",    label:"Prompt mania",    team:false},
+  {id:"debugging", label:"Debugging", team:false},
+  {id:"coding",    label:"Coding",    team:false},
+  {id:"ideathon",  label:"Ideathon",  team:true}
+];
+var NONTECH = [
+  {id:"rapidrush",   label:"Rapid Rush",    team:true},
+  {id:"photography", label:"Photography",   team:false},
+  {id:"meme",        label:"Meme Creation", team:false},
+  {id:"chess",       label:"Chess",         team:false}
+];
+
+var LIVE_COUNTS = {};
+var S = freshState();
+
+// Tracks regs that have been submitted THIS session to block duplicate submits
+// after a no-cors POST (we can't read the response, so we track locally)
+var SUBMITTED_REGS = {};
+
+function freshState(){
+  return {
+    reg:"",name:"",dept:"",year:"",phone:"",email:"",
+    techIds:[],nonTechId:null,
+    iMember:null,rrMember:null,
+    preEnrolled:false,preEvent:null,preEventId:null,preIsTech:false,
+    preCanAddNonTech:true,
+    maxTech:2,canAddNonTech:true
+  };
+}
+
+// ── VALIDATION HELPERS ──────────────────────────────────────────────────────
+
+/**
+ * BUG FIX #1: Reg number validation
+ * - Must be exactly 12 digits
+ * - Must NOT be all zeros
+ * - Must NOT start with 0 (reg numbers are typically non-zero leading)
+ */
+function isValidReg(v){
+  if(!/^\d{12}$/.test(v)) return false;
+  if(/^0/.test(v)) return false;          // no leading zero
+  if(/^0+$/.test(v)) return false;        // not all zeros
+  return true;
+}
+
+/**
+ * BUG FIX #2: Phone validation
+ * - Must be exactly 10 digits
+ * - Must NOT start with 0
+ * - Must start with 6, 7, 8, or 9 (valid Indian mobile)
+ */
+function isValidPhone(v){
+  if(!/^\d{10}$/.test(v)) return false;
+  if(!/^[6-9]/.test(v)) return false;    // Indian mobile: starts 6–9
+  return true;
+}
+
+// ── FIELD LIVE FEEDBACK ─────────────────────────────────────────────────────
+document.getElementById("f-reg").addEventListener("input", function(){
+  this.value = this.value.replace(/\D/g,"");
+  var h = document.getElementById("reg-hint");
+  var inp = this;
+  var n = this.value.length;
+  if(n === 0){
+    h.textContent = "Exactly 12 digits \u2014 numbers only";
+    h.className = "hint"; inp.className = "";
+  } else if(n < 12){
+    h.textContent = n + " / 12 digits";
+    h.className = "hint"; inp.className = "";
+  } else {
+    if(isValidReg(this.value)){
+      h.textContent = "\u2713 Valid register number";
+      h.className = "hint ok"; inp.className = "ok";
+    } else {
+      h.textContent = "\u2717 Cannot start with 0";
+      h.className = "hint err"; inp.className = "err";
+    }
+  }
+});
+
+document.getElementById("f-phone").addEventListener("input", function(){
+  this.value = this.value.replace(/\D/g,"");
+  var h = document.getElementById("phone-hint");
+  var inp = this;
+  var n = this.value.length;
+  if(n === 0){
+    h.textContent = "Must be 10 digits, cannot start with 0";
+    h.className = "hint"; inp.className = "";
+  } else if(n < 10){
+    h.textContent = n + " / 10 digits";
+    h.className = "hint"; inp.className = "";
+  } else {
+    if(isValidPhone(this.value)){
+      h.textContent = "\u2713 Valid phone number";
+      h.className = "hint ok"; inp.className = "ok";
+    } else {
+      h.textContent = "\u2717 Must start with 6, 7, 8 or 9";
+      h.className = "hint err"; inp.className = "err";
+    }
+  }
+});
+
+// Live reg hint for partner fields
+function attachRegHint(inputId, hintId){
+  var inp = document.getElementById(inputId);
+  if(!inp) return;
+  inp.addEventListener("input", function(){
+    this.value = this.value.replace(/\D/g,"");
+    var h = document.getElementById(hintId);
+    if(!h) return;
+    var n = this.value.length;
+    if(n===0){ h.textContent="Exactly 12 digits"; h.className="hint"; this.className="";}
+    else if(n<12){ h.textContent=n+" / 12 digits"; h.className="hint"; this.className="";}
+    else if(isValidReg(this.value)){ h.textContent="\u2713 Valid"; h.className="hint ok"; this.className="ok";}
+    else { h.textContent="\u2717 Cannot start with 0"; h.className="hint err"; this.className="err";}
+  });
+}
+attachRegHint("i-reg","ireg-hint");
+attachRegHint("r-reg","rreg-hint");
+
+// ── CAPACITY / LABEL HELPERS ────────────────────────────────────────────────
+function getLimitFor(id){
+  var label = idToLabel(id);
+  if(LIVE_LIMITS[label]) return LIVE_LIMITS[label];
+  var teamIds=["ideathon","rapidrush"];
+  return teamIds.indexOf(id)>=0 ? TEAM_LIMIT : SOLO_LIMIT;
+}
+
+function idToLabel(id){
+  var all = TECH.concat(NONTECH);
+  for(var i=0;i<all.length;i++) if(all[i].id===id) return all[i].label;
+  return id;
+}
+
+function getCount(id){
+  return LIVE_COUNTS[idToLabel(id)]||0;
+}
+
+function checkAllTechFull(){
+  for(var i=0;i<TECH.length;i++){
+    if(getCount(TECH[i].id) < getLimitFor(TECH[i].id)) return false;
+  }
+  return true;
+}
+
+function capHTML(id){
+  var cnt  = getCount(id);
+  var lim  = getLimitFor(id);
+  var pct  = Math.min(cnt/lim*100,100);
+  var cls  = pct>=100?"d":pct>=70?"w":"";
+  var isTeam = (id==="ideathon"||id==="rapidrush");
+  var lbl  = cnt>=lim ? "FULL" : cnt+"/"+lim+(isTeam?" pairs":" seats");
+  return '<div class="cap"><div class="cap-lbl">'+lbl+'</div>'
+    +'<div class="cap-bar"><div class="cap-fill '+cls+'" style="width:'+pct+'%"></div></div></div>';
+}
+
+// ── RENDER EVENTS ───────────────────────────────────────────────────────────
+function renderTech(){
+  ALL_TECH_FULL = checkAllTechFull();
+  var sel  = S.techIds;
+  var maxT = S.maxTech;
+  var html = "";
+
+  if(ALL_TECH_FULL){
+    for(var i=0;i<TECH.length;i++){
+      var e=TECH[i];
+      html+='<div class="ev ev-full">'
+        +'<div class="ev-chk">&#10003;</div>'
+        +'<div class="ev-name">'+e.label+'</div>'
+        +'<div class="ev-badges"><span class="badge bt">Technical</span>'
+        +(e.team?'<span class="badge bm">Team &middot; max 2</span>':'')+'</div>'
+        +capHTML(e.id)+'</div>';
+    }
+    document.getElementById("tech-full-notice").innerHTML=
+      '<div class="alert aw" style="margin-bottom:12px">&#9888;&#65039; All Technical events are full. You may register for a <strong>Non-Technical event only</strong>. Click Continue below.</div>';
+    document.getElementById("tech-info").style.display="none";
+    document.getElementById("tctr").style.display="none";
+    document.getElementById("tech-cs").textContent="All Technical events are full";
+  } else {
+    document.getElementById("tech-full-notice").innerHTML="";
+    document.getElementById("tech-info").style.display="flex";
+    document.getElementById("tctr").style.display="inline-flex";
+
+    var csText;
+    if(S.preEnrolled && S.preIsTech){
+      csText="Optional \u2014 add 1 Tech, or skip to Non-Technical";
+    } else if(S.preEnrolled && !S.preIsTech){
+      csText="Select 1 Technical event \u2014 mandatory";
+    } else {
+      csText="Select 1 or 2 \u2014 mandatory";
+    }
+    document.getElementById("tech-cs").textContent=csText;
+
+    for(var j=0;j<TECH.length;j++){
+      var ev=TECH[j];
+      var cnt=getCount(ev.id);
+      var full=cnt>=getLimitFor(ev.id);
+      var idx=sel.indexOf(ev.id);
+      var isSel=idx>=0;
+      var locked=sel.length>=maxT&&!isSel;
+      var cls=full?"ev-full":locked?"ev-off":isSel?(idx===0?"t1":"t2"):"";
+      html+='<div class="ev '+cls+'" id="te-'+ev.id+'" onclick="pickT(\''+ev.id+'\')">'
+        +'<div class="ev-chk">&#10003;</div>'
+        +'<div class="ev-name">'+ev.label+'</div>'
+        +'<div class="ev-badges"><span class="badge bt">Technical</span>'
+        +(ev.team?'<span class="badge bm">Team &middot; max 2</span>':'')+'</div>'
+        +capHTML(ev.id)+'</div>';
+    }
+    var ctr=document.getElementById("tctr");
+    ctr.textContent=sel.length+" / "+maxT+" selected";
+    ctr.className="counter"+(sel.length>=maxT?" maxed":"");
+  }
+  document.getElementById("tech-grid").innerHTML=html;
+}
+
+function renderNT(){
+  var twoTechPicked = (!ALL_TECH_FULL && S.techIds.length>=2);
+  var blocked = twoTechPicked || !S.canAddNonTech;
+  var html="";
+  for(var i=0;i<NONTECH.length;i++){
+    var e=NONTECH[i];
+    var cnt=getCount(e.id);
+    var full=cnt>=getLimitFor(e.id);
+    var sel=S.nonTechId===e.id;
+    var cls=full?"ev-full":blocked?"ev-off":sel?"nt":"";
+    html+='<div class="ev '+cls+'" id="nte-'+e.id+'" onclick="pickNT(\''+e.id+'\')">'
+      +'<div class="ev-chk">&#10003;</div>'
+      +'<div class="ev-name">'+e.label+'</div>'
+      +'<div class="ev-badges"><span class="badge bn">Non-Technical</span>'
+      +(e.team?'<span class="badge bm">Team &middot; max 2</span>':'')+'</div>'
+      +capHTML(e.id)+'</div>';
+  }
+  document.getElementById("nt-grid").innerHTML=html;
+}
+
+function pickT(id){
+  if(ALL_TECH_FULL) return;
+  var i=S.techIds.indexOf(id);
+  if(i>=0){
+    S.techIds.splice(i,1);
+    if(id==="ideathon") S.iMember=null;
+  } else {
+    if(S.techIds.length>=S.maxTech) return;
+    if(getCount(id)>=getLimitFor(id)){showInlineErr("tech-full-notice",idToLabel(id)+" is FULL!");return;}
+    S.techIds.push(id);
+  }
+  S.canAddNonTech = S.preEnrolled
+    ? S.preCanAddNonTech && S.techIds.length < 2
+    : S.techIds.length < 2;
+  renderTech();
+  document.getElementById("ibox").classList.toggle("show",S.techIds.indexOf("ideathon")>=0);
+}
+
+function pickNT(id){
+  var twoTechPicked = S.techIds.length>=2;
+  if(twoTechPicked || !S.canAddNonTech) return;
+  if(getCount(id)>=getLimitFor(id)){showInlineErr("nt-notice",idToLabel(id)+" is FULL!");return;}
+  S.nonTechId = S.nonTechId===id ? null : id;
+  renderNT();
+  document.getElementById("rbox").classList.toggle("show",S.nonTechId==="rapidrush");
+}
+
+// ── STEPPER ──────────────────────────────────────────────────────────────────
+function goTo(n){
+  document.querySelectorAll(".panel").forEach(function(p){p.classList.remove("active");});
+  document.getElementById("p"+n).classList.add("active");
+  for(var i=1;i<=4;i++){
+    var nd=document.getElementById("sn"+i);
+    var lb=document.getElementById("sl"+i);
+    nd.classList.remove("active","done");
+    if(lb) lb.classList.remove("active","done");
+    if(i<n){
+      nd.classList.add("done");
+      nd.innerHTML="&#10003;";
+      if(lb) lb.classList.add("done");
+    } else if(i===n){
+      nd.classList.add("active");
+      nd.textContent = i<4 ? String(i) : "\u2713";
+      if(lb) lb.classList.add("active");
+    } else {
+      nd.textContent = i<4 ? String(i) : "\u2713";
+    }
+    if(i<4) document.getElementById("st"+i).classList.toggle("done",i<n);
+  }
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function g(id){return document.getElementById(id).value.trim();}
+
+function showErr(containerId, msg){
+  var el=document.getElementById(containerId);
+  el.innerHTML='<div class="alert ae">&#9888;&#65039; '+msg+'</div>';
+  el.scrollIntoView({behavior:"smooth",block:"center"});
+}
+function showInlineErr(containerId, msg){
+  var el=document.getElementById(containerId);
+  el.innerHTML='<div class="alert ae">&#9888;&#65039; '+msg+'</div>';
+}
+function clearEl(id){document.getElementById(id).innerHTML="";}
+
+// ── STEP 1 ───────────────────────────────────────────────────────────────────
+function doStep1(){
+  var reg=g("f-reg"), name=g("f-name"), dept=g("f-dept"),
+      year=g("f-year"), ph=g("f-phone"), em=g("f-email");
+
+  if(!reg||!name||!dept||!year||!ph||!em)
+    return showErr("a1","Please fill in all fields.");
+
+  // BUG FIX #1: Strict reg validation — no leading zeros, exactly 12 digits
+  if(!isValidReg(reg))
+    return showErr("a1","Register Number must be exactly 12 digits and cannot start with 0.");
+
+  // BUG FIX #2: Strict phone validation — starts with 6–9, no leading zeros
+  if(!isValidPhone(ph))
+    return showErr("a1","Phone must be 10 digits and start with 6, 7, 8 or 9.");
+
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em))
+    return showErr("a1","Enter a valid email address.");
+
+  // BUG FIX #5: Block resubmit if this reg was already submitted this session
+  if(SUBMITTED_REGS[reg])
+    return showErr("a1","This register number was already submitted in this session. Please refresh if you need to start over.");
+
+  var btn=document.getElementById("btn1");
+  btn.disabled=true; btn.classList.add("loading");
+
+  fetch(SCRIPT_URL+"?action=check&reg="+encodeURIComponent(reg))
+  .then(function(r){return r.json();})
+  .then(function(res){
+    btn.disabled=false; btn.classList.remove("loading");
+
+    if(res.status==="duplicate"){
+      if(res.type==="individual"){
+        showErr("a1","Register number "+reg+" is already registered.");
+        return;
+      }
+      if(res.type==="team_member"){
+        S.preEnrolled      = true;
+        S.preEvent         = res.event;
+        S.preEventId       = res.eventId;
+        S.preIsTech        = res.isTechEvent;
+        S.preCanAddNonTech = (res.canAddNonTech !== undefined) ? res.canAddNonTech : res.isTechEvent;
+
+        if(S.preIsTech){
+          S.maxTech       = 1;
+          S.canAddNonTech = true;
+        } else {
+          S.maxTech       = 1;
+          S.canAddNonTech = false;
+        }
+      }
+    } else {
+      S.preEnrolled      = false;
+      S.preEvent         = null;
+      S.preEventId       = null;
+      S.preIsTech        = false;
+      S.preCanAddNonTech = true;
+      S.maxTech          = 2;
+      S.canAddNonTech    = true;
+    }
+
+    S.reg=reg; S.name=name; S.dept=dept; S.year=year; S.phone=ph; S.email=em;
+    clearEl("a1");
+
+    if(S.preEnrolled){
+      var ruleText;
+      if(S.preIsTech){
+        ruleText = "You are pre-enrolled in <strong>"+S.preEvent+"</strong> (Tech). "
+          +"You may add <strong>1 more Technical</strong> OR <strong>1 Non-Technical event</strong> \u2014 not both. "
+          +"Or skip directly to Non-Technical below.";
+      } else {
+        ruleText = "You are pre-enrolled in <strong>"+S.preEvent+"</strong> (Non-Tech). "
+          +"You may add <strong>1 Technical event only</strong>. Non-Technical events are blocked.";
+      }
+      document.getElementById("pre-notice").innerHTML=
+        '<div class="alert aw">&#9888;&#65039; '+ruleText+'</div>';
+    } else {
+      document.getElementById("pre-notice").innerHTML="";
+    }
+
+    S.techIds=[];
+    fetch(SCRIPT_URL+"?action=counts")
+    .then(function(r){return r.json();})
+    .then(function(res2){
+      if(res2&&res2.counts)    LIVE_COUNTS=res2.counts;
+      if(res2&&res2.limits)    LIVE_LIMITS=res2.limits;
+      if(res2&&res2.soloLimit) SOLO_LIMIT=res2.soloLimit;
+      if(res2&&res2.teamLimit) TEAM_LIMIT=res2.teamLimit;
+      renderTech(); goTo(2);
+    })
+    .catch(function(){renderTech(); goTo(2);});
+  })
+  .catch(function(){
+    btn.disabled=false; btn.classList.remove("loading");
+    showErr("a1","Could not connect to server. Check your internet and try again.");
+  });
+}
+
+// ── STEP 2 ───────────────────────────────────────────────────────────────────
+function doStep2(){
+  if(ALL_TECH_FULL){
+    S.techIds=[]; S.iMember=null;
+    document.getElementById("nt-notice").innerHTML=
+      '<div class="alert aw">&#9888;&#65039; All Technical events are full. Select 1 Non-Technical event to register.</div>';
+    S.nonTechId=null; renderNT(); goTo(3);
+    document.getElementById("skipbtn").style.display="none";
+    return;
+  }
+
+  if(S.preEnrolled && S.preIsTech){
+    if(S.techIds.indexOf("ideathon")>=0){
+      if(!validateIdeathonPartner()) return;
+    } else {
+      S.iMember=null;
+    }
+    if(S.techIds.length>=1){
+      S.nonTechId=null; S.rrMember=null; doSubmit();
+      return;
+    }
+    S.canAddNonTech=true;
+    document.getElementById("nt-notice").innerHTML=
+      '<div class="alert ai">&#8505;&#65039; You are pre-enrolled in <strong>'+S.preEvent+'</strong>. '
+      +'Select one Non-Technical event below, or skip.</div>';
+    document.getElementById("skipbtn").style.display="block";
+    S.nonTechId=null; renderNT(); goTo(3);
+    return;
+  }
+
+  if(S.preEnrolled && !S.preIsTech){
+    if(S.techIds.length===0)
+      return showErr("tech-full-notice","Please select at least one Technical event.");
+    if(S.techIds.indexOf("ideathon")>=0){
+      if(!validateIdeathonPartner()) return;
+    } else {S.iMember=null;}
+    S.nonTechId=null; S.rrMember=null; doSubmit();
+    return;
+  }
+
+  // Normal flow
+  if(S.techIds.length===0)
+    return showErr("tech-full-notice","Please select at least one Technical Event.");
+  if(S.techIds.indexOf("ideathon")>=0){
+    if(!validateIdeathonPartner()) return;
+  } else {S.iMember=null;}
+
+  if(S.techIds.length>=2){
+    S.nonTechId=null; S.rrMember=null; doSubmit();
+    return;
+  }
+
+  document.getElementById("nt-notice").innerHTML=
+    '<div class="alert ai">&#8505;&#65039; Optional \u2014 add one Non-Technical event, or skip below.</div>';
+  document.getElementById("skipbtn").style.display="block";
+  S.nonTechId=null; renderNT(); goTo(3);
+}
+
+function validateIdeathonPartner(){
+  var nm=g("i-name"), rg=g("i-reg"), em=g("i-email");
+  if(!nm||!rg||!em){ showErr("tech-full-notice","Fill in all Ideathon partner details."); return false;}
+  // BUG FIX #1: validate partner reg too
+  if(!isValidReg(rg)){ showErr("tech-full-notice","Partner register number must be 12 digits and cannot start with 0."); return false;}
+  if(rg===S.reg){ showErr("tech-full-notice","Partner cannot have the same register number as you."); return false;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){ showErr("tech-full-notice","Enter a valid email for the partner."); return false;}
+  S.iMember={name:nm,reg:rg,email:em};
+  return true;
+}
+
+function validateRRPartner(){
+  var nm=g("r-name"), rg=g("r-reg"), em=g("r-email");
+  if(!nm||!rg||!em){ showErr("nt-notice","Fill in all Rapid Rush partner details."); return false;}
+  // BUG FIX #1: validate partner reg too
+  if(!isValidReg(rg)){ showErr("nt-notice","Partner register number must be 12 digits and cannot start with 0."); return false;}
+  if(rg===S.reg){ showErr("nt-notice","Partner cannot be the same person as you."); return false;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){ showErr("nt-notice","Enter a valid email for the partner."); return false;}
+  S.rrMember={name:nm,reg:rg,email:em};
+  return true;
+}
+
+// ── STEP 3 ───────────────────────────────────────────────────────────────────
+function doStep3(){
+  if(ALL_TECH_FULL&&!S.nonTechId)
+    return showErr("nt-notice","Please select a Non-Technical event.");
+  if(S.preEnrolled&&S.preIsTech&&S.techIds.length===0&&!S.nonTechId)
+    return showErr("nt-notice","Please select a Non-Technical event, or go back and pick a Technical event.");
+  if(S.nonTechId==="rapidrush"){
+    if(!validateRRPartner()) return;
+  } else {S.rrMember=null;}
+  doSubmit();
+}
+
+function doSkip(){S.nonTechId=null; S.rrMember=null; doSubmit();}
+
+// ── SUBMIT ────────────────────────────────────────────────────────────────────
+function doSubmit(){
+  // BUG FIX #5: Prevent double submit
+  if(SUBMITTED_REGS[S.reg]){
+    showErr("nt-notice","This registration was already submitted. Please refresh to start over.");
+    return;
+  }
+
+  var sbtn=document.getElementById("sbtn");
+  var skipbtn=document.getElementById("skipbtn");
+  if(sbtn){sbtn.classList.add("loading");sbtn.disabled=true;}
+  if(skipbtn){skipbtn.style.pointerEvents="none";skipbtn.style.opacity="0.4";}
+
+  var techLabels=[];
+  for(var i=0;i<S.techIds.length;i++){
+    for(var j=0;j<TECH.length;j++){
+      if(TECH[j].id===S.techIds[i]){techLabels.push(TECH[j].label);break;}
+    }
+  }
+  var ntLabel="";
+  for(var k=0;k<NONTECH.length;k++){
+    if(NONTECH[k].id===S.nonTechId){ntLabel=NONTECH[k].label;break;}
+  }
+
+  var payload={
+    timestamp:new Date().toISOString(),
+    reg:S.reg,name:S.name,dept:S.dept,year:S.year,
+    phone:S.phone,email:S.email,
+    techIds:S.techIds,techLabels:techLabels,
+    nonTechId:S.nonTechId,nonTechLabel:ntLabel,
+    iTeamMember:S.iMember,rrTeamMember:S.rrMember,
+    isPreEnrolled:S.preEnrolled,preEvent:S.preEvent,
+    preIsTech:S.preIsTech
+  };
+
+  // BUG FIX #5: Mark as submitted BEFORE the fetch so double-clicks are blocked
+  SUBMITTED_REGS[S.reg] = true;
+
+  // NOTE: mode:"no-cors" cannot read the response — we trust the server
+  // and show success. The server-side duplicate check is the real guard.
+  fetch(SCRIPT_URL,{
+    method:"POST",
+    mode:"no-cors",
+    headers:{"Content-Type":"text/plain"},
+    body:JSON.stringify(payload)
+  })
+  .then(function(){
+    showSuccess(payload,techLabels,ntLabel);
+  })
+  .catch(function(){
+    // BUG FIX #5: On network error, unmark so user can retry
+    delete SUBMITTED_REGS[S.reg];
+    if(sbtn){sbtn.classList.remove("loading");sbtn.disabled=false;}
+    if(skipbtn){skipbtn.style.pointerEvents="";skipbtn.style.opacity="";}
+    showErr("nt-notice","Network error \u2014 check your connection and try again.");
+  });
+}
+
+// ── SUCCESS SCREEN ───────────────────────────────────────────────────────────
+function showSuccess(d,techLabels,ntLabel){
+  goTo(4);
+  document.getElementById("dp-id").textContent="REG/"+d.reg;
+  document.getElementById("dp-name").textContent=d.name;
+  document.getElementById("dp-reg").textContent=d.reg;
+  document.getElementById("dp-dept").textContent=d.dept+" \u00b7 "+d.year;
+  document.getElementById("dp-phone").textContent=d.phone;
+
+  var chips="";
+  if(d.isPreEnrolled&&d.preEvent)
+    chips+='<span class="chip chp">'+d.preEvent+' \u2014 Pre-enrolled (Team Member)</span>';
+  for(var i=0;i<techLabels.length;i++)
+    chips+='<span class="chip cht">'+techLabels[i]+(d.techIds[i]==="ideathon"&&d.iTeamMember?" \u2014 Leader":"")+'</span>';
+  if(ntLabel)
+    chips+='<span class="chip chn">'+ntLabel+(d.rrTeamMember?" \u2014 Leader":"")+'</span>';
+  document.getElementById("dp-evs").innerHTML=chips;
+
+  var t="";
+  if(d.iTeamMember)
+    t+='<div class="dp-team"><div class="dp-team-title">Ideathon Partner</div>'
+      +'<div class="dp-row"><span class="dk">Name</span><span class="dv">'+d.iTeamMember.name+'</span></div>'
+      +'<div class="dp-row"><span class="dk">Reg. No.</span><span class="dv">'+d.iTeamMember.reg+'</span></div></div>';
+  if(d.rrTeamMember)
+    t+='<div class="dp-team" style="margin-top:10px"><div class="dp-team-title">Rapid Rush Partner</div>'
+      +'<div class="dp-row"><span class="dk">Name</span><span class="dv">'+d.rrTeamMember.name+'</span></div>'
+      +'<div class="dp-row"><span class="dk">Reg. No.</span><span class="dv">'+d.rrTeamMember.reg+'</span></div></div>';
+  document.getElementById("dp-team").innerHTML=t;
+
+  var c='<div class="alert aok" style="text-align:left;margin:0 0 12px">'
+    +'&#10003; Digital pass emailed to <strong>'+d.email+'</strong>';
+  if(d.iTeamMember)  c+='<br>&#128231; Team notification sent to <strong>'+d.iTeamMember.name+'</strong>';
+  if(d.rrTeamMember) c+='<br>&#128231; Team notification sent to <strong>'+d.rrTeamMember.name+'</strong>';
+  c+='</div>';
+  c+='<a href="'+WA_LINK+'" target="_blank" class="wa-banner" style="margin-bottom:14px">'
+    +'<div class="wa-icon">&#128172;</div>'
+    +'<div><div class="wa-t">Join TECHNOVANZA 2026 WhatsApp Community</div>'
+    +'<div class="wa-s">Get schedule, updates &amp; announcements &rarr;</div></div></a>';
+  document.getElementById("confirms").innerHTML=c;
+}
+
+// ── RESET ────────────────────────────────────────────────────────────────────
+function doReset(){
+  S=freshState();
+  LIVE_COUNTS={}; LIVE_LIMITS={}; ALL_TECH_FULL=false;
+  // NOTE: We do NOT clear SUBMITTED_REGS — that persists for the session
+  // to prevent re-registration of already-submitted reg numbers.
+
+  ["f-reg","f-name","f-phone","f-email","i-name","i-reg","i-email","r-name","r-reg","r-email"]
+    .forEach(function(id){var el=document.getElementById(id);if(el){el.value="";el.className="";}});
+  document.getElementById("f-dept").value="";
+  document.getElementById("f-year").value="";
+
+  // Reset hints
+  var rh=document.getElementById("reg-hint");
+  if(rh){rh.textContent="Exactly 12 digits \u2014 numbers only";rh.className="hint";}
+  var ph=document.getElementById("phone-hint");
+  if(ph){ph.textContent="Must be 10 digits, cannot start with 0";ph.className="hint";}
+  var ih=document.getElementById("ireg-hint");
+  if(ih){ih.textContent="Exactly 12 digits";ih.className="hint";}
+  var rr=document.getElementById("rreg-hint");
+  if(rr){rr.textContent="Exactly 12 digits";rr.className="hint";}
+
+  clearEl("a1"); clearEl("pre-notice"); clearEl("tech-full-notice");
+  clearEl("nt-notice");
+  document.getElementById("ibox").classList.remove("show");
+  document.getElementById("rbox").classList.remove("show");
+  document.getElementById("skipbtn").style.display="block";
+  renderTech(); renderNT(); goTo(1);
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+renderTech();
+renderNT();
+</script>
+</body>
+</html>
